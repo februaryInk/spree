@@ -29,26 +29,49 @@ Spree.ready ($) ->
       ($ '#main-image img').attr 'src', newImg
       ($ '#main-image').data 'selectedThumb', newImg
       ($ '#main-image').data 'selectedThumbId', thumb.attr('id')
-
-  Spree.updateVariantPrice = (variant) ->
-    variantPrice = variant.data('price')
+  
+  Spree.updateVariant = (variantId) -> 
+    ($ '#selected-variant').val(variantId)
+  
+  Spree.updateVariantPrice = (variantPrice) ->
     ($ '.price.selling').text(variantPrice) if variantPrice
 
   Spree.disableCartForm = (variant) ->
     inStock = variant.data('in-stock')
     $('#add-to-cart-button').attr('disabled', !inStock)
-
-  radios = ($ '#product-variants input[type="radio"]')
-
-  if radios.length > 0
-    selectedRadio = ($ '#product-variants input[type="radio"][checked="checked"]')
-    Spree.showVariantImages selectedRadio.attr('value')
-    Spree.updateVariantPrice selectedRadio
-    Spree.disableCartForm selectedRadio
-
-    radios.click (event) ->
-      Spree.showVariantImages @value
-      Spree.updateVariantPrice ($ this)
-      Spree.disableCartForm ($ this)
+    
+  Spree.selectVariant = (optionValueIds, productId) ->
+    $.get
+      data: variant:
+        option_value_ids: optionValueIds,
+        product_id: productId
+      dataType: 'json'
+      url: '/products/' + productId + '/query-variant'
+      error: (response) ->
+        console.log 'error'
+        ### display error message ###
+      success: (response) ->
+        console.log 'success'
+        console.log response
+        ### hide error message ###
+        Spree.updateVariant response.variant.id
+        Spree.showVariantImages response.variant.id
+        Spree.updateVariantPrice response.variant.price
+  
+  variantSelectors = $ '.variant-selector'
+  productId = ($ '#add-to-cart').data 'product-id'
+  
+  if variantSelectors.length > 0
+    console.log "We're goin'"
+    variantSelectors.change (event) ->
+      ids = []
+      $.each variantSelectors, (index, value) ->
+        ids.push $(value).val()
+      
+      ids = ids.filter (v) -> v != ''
+      
+      if ids.length == variantSelectors.length
+        Spree.selectVariant ids, productId
+  
 
   Spree.addImageHandlers()

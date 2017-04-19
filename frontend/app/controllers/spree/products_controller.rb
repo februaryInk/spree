@@ -14,6 +14,22 @@ module Spree
       @products = @products.includes(:possible_promotions) if @products.respond_to?(:includes)
       @taxonomies = Spree::Taxonomy.includes(root: :children)
     end
+    
+    def query_variant
+      product_id = params[:variant][:product_id].to_i
+      option_value_ids = params[:variant][:option_value_ids].map { |v| v.to_i }
+      
+      variant = Spree::Variant.joins(:option_value_variants).where(:product_id => product_id).where((['spree_variants.id IN (SELECT variant_id FROM spree_option_value_variants WHERE option_value_id = ?)'] * option_value_ids.count).join(' AND '), *option_value_ids).first
+      display_price =
+      
+      respond_to do |format|
+        if variant.present?
+          format.json { render json: { variant: { id: variant.id, price: helpers.display_price(variant) } }, status: 200 }
+        else
+          format.json { render json: nil, status: 400 }
+        end
+      end
+    end
 
     def show
       @variants = @product.variants_including_master.
@@ -24,7 +40,7 @@ module Spree
       @taxon = params[:taxon_id].present? ? Spree::Taxon.find(params[:taxon_id]) : @product.taxons.first
       redirect_if_legacy_path
     end
-
+    
     private
 
       def accurate_title
