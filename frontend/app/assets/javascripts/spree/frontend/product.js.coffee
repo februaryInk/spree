@@ -30,6 +30,9 @@ Spree.ready ($) ->
       ($ '#main-image').data 'selectedThumb', newImg
       ($ '#main-image').data 'selectedThumbId', thumb.attr('id')
   
+  Spree.updateCustomizationFields = (html) ->
+    ($ '#customization-fields' ).html(html)
+  
   Spree.updateVariant = (variantId) -> 
     ($ '#selected-variant').val(variantId)
   
@@ -57,12 +60,12 @@ Spree.ready ($) ->
         Spree.updateVariant response.variant.id
         Spree.showVariantImages response.variant.id
         Spree.updateVariantPrice response.variant.price
+        Spree.updateCustomizationFields response.partial
   
   variantSelectors = $ '.variant-selector'
   productId = ($ '#add-to-cart').data 'product-id'
   
   if variantSelectors.length > 0
-    console.log "We're goin'"
     variantSelectors.change (event) ->
       ids = []
       $.each variantSelectors, (index, value) ->

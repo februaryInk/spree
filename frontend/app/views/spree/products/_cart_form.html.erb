@@ -1,7 +1,7 @@
 <%= form_for :order, url: populate_orders_path, html: { id: 'add-to-cart', 'data-product-id' => @product.id } do |f| %>
   <div class="row" id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
     <% if @product.variants_and_option_values(current_currency).any? %>
-      <div class='col-md-6' %>
+      <div class='col-md-6'>
         <%= hidden_field_tag :variant_id, nil, :id => 'selected-variant' %>
         <% @product.option_types.each do |option_type| %>
           <p class='field'>
@@ -13,6 +13,10 @@
     <% else %>
       <%= hidden_field_tag :variant_id, @product.master.id %>
     <% end %>
+    
+    <div class='row' id='customization-fields'>
+      
+    </div>
 
     <% if @product.price_in(current_currency) && !@product.price.nil? %>
       <div data-hook="product_price" class="col-md-5">

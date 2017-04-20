@@ -20,11 +20,11 @@ module Spree
       option_value_ids = params[:variant][:option_value_ids].map { |v| v.to_i }
       
       variant = Spree::Variant.joins(:option_value_variants).where(:product_id => product_id).where((['spree_variants.id IN (SELECT variant_id FROM spree_option_value_variants WHERE option_value_id = ?)'] * option_value_ids.count).join(' AND '), *option_value_ids).first
-      display_price =
+      response = { partial: render_to_string(partial: 'customization_fields', locals: { variant: variant }), variant: { id: variant.id, price: helpers.display_price(variant) } }
       
       respond_to do |format|
         if variant.present?
-          format.json { render json: { variant: { id: variant.id, price: helpers.display_price(variant) } }, status: 200 }
+          format.json { render json: response, status: 200 }
         else
           format.json { render json: nil, status: 400 }
         end
@@ -39,6 +39,7 @@ module Spree
       @product_properties = @product.product_properties.includes(:property)
       @taxon = params[:taxon_id].present? ? Spree::Taxon.find(params[:taxon_id]) : @product.taxons.first
       redirect_if_legacy_path
+      @variant = @variants.last
     end
     
     private

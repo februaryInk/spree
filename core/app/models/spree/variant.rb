@@ -30,6 +30,9 @@ module Spree
 
     has_many :option_value_variants, class_name: 'Spree::OptionValueVariant'
     has_many :option_values, through: :option_value_variants, class_name: 'Spree::OptionValue'
+    
+    has_many :customization_variants, class_name: 'Spree::CustomizationVariant'
+    has_many :customizations, through: :customization_variants, class_name: 'Spree::Customization'
 
     has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
 

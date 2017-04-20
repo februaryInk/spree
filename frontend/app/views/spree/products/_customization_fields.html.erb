@@ -1,0 +1,14 @@
+<div class='col-md-6'>
+  <% variant.customization_variants.order(:position).each do |customization_variant| %>
+    <% customization = customization_variant.customization %>
+    <p class='field'>
+      <%= label_tag customization.presentation %>
+      <% if customization.value_type == 'string' %>
+        <%= text_field_tag "[customizations][#{customization.name}]" %>
+      <% elsif customization.value_type == 'select' %>
+        <%= select_tag "[customizations][#{customization.name}]", options_from_collection_for_select( customization.customization_values, :name, :presentation ), { :prompt => "Choose #{customization.presentation}" } %>
+      <% else %>
+        <%= text_area_tag "[customizations][#{customization.name}]" %>
+      <% end %>
+  <% end %>
+</div>

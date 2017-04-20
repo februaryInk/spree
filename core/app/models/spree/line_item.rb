@@ -6,6 +6,7 @@ module Spree
       belongs_to :order, class_name: "Spree::Order", touch: true
       belongs_to :variant, class_name: "Spree::Variant"
     end
+    
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
 
     has_one :product, through: :variant
