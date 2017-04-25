@@ -1,16 +1,28 @@
-<nav class="col-md-12">
-  <div id="main-nav-bar" class="navbar">
-    <ul class="nav navbar-nav" data-hook>
-      <li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right" data-hook>
-      <li id="link-to-cart" data-hook>
-        <noscript>
-          <%= link_to Spree.t(:cart), '/cart' %>
-        </noscript>
-        &nbsp;
-      </li>
-      <script>Spree.fetch_cart()</script>
-    </ul>
-  </div>
-</nav>
+<div class='container'>
+  <nav class='col-md-12'>
+    <div id="main-nav-bar" class="navbar">
+      <ul class='nav nav-pills'>
+        <li class='nav-item'>
+          <%= link_to Spree.t(:home), spree.root_path, class: 'nav-link' %>
+        </li>
+        <li class='nav-item dropdown'>
+          <%= link_to spree.products_path, class: 'dropdown-toggle nav-link', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' do %>
+            Products
+            <span class='caret'></span>
+          <ul class='dropdown-menu'>
+            <li>
+              <%= link_to 'All Products', spree.products_path, class: 'dropdown-item' %>
+              <% end %>
+            </li>
+            <li class='divider' role='separator'></li>
+            <% Spree::Product.all.each do |product| %>
+              <li>
+                <%= link_to product.name, spree.products_path(product), class: 'dropdown-item' %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</container>

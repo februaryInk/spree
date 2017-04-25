@@ -1,4 +1,18 @@
 /*--------------------------------
   Colors
 --------------------------------*/
-$brand-primary: #1c5c92;
+
+$black: #000000;
+$burnham: #23443f;
+$glacier: #72b7bc;
+$ice-cold: #b9e7dd;
+$racing-green: #192420;
+$tenne: #c74900;
+$white: #ffffff;
+$wild-sand: #edeae5;
+
+$brand-primary: $burnham;
+$brand-secondary: $glacier;
+$brand-bright: $tenne;
+$brand-success: $glacier;
+$gray-light: $wild-sand;
