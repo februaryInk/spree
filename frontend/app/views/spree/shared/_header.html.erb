@@ -1,15 +1,20 @@
 <header class='page-header' id="header" data-hook>
-  <div class='header-main row'>
+  <div class='header-main'>
     <div class='container'>
-      <div id='logo' class='col-md-4 col-sm-3'>
-        <%= link_to spree.root_path, class: 'navbar-brand' do %>
-          <%= image_tag Spree::Config.logo, alt: 'Rock Solid Memories logo.', class: 'img-responsive' %>
-        <% end %>
+      <div class='row'>
+        <div id='logo' class='col-md-4 col-sm-3'>
+          <%= link_to spree.root_path, class: 'navbar-brand' do %>
+            <%= image_tag Spree::Config.logo, alt: 'Rock Solid Memories logo.', class: 'img-responsive' %>
+          <% end %>
+        </div>
+        <%= render partial: 'spree/shared/nav_bar' %>
       </div>
-      <%= render partial: 'spree/shared/nav_bar' %>
     </div>
   </div>
-  <div class='header-nav row'>
-    <%= render partial: 'spree/shared/main_nav_bar' if store_menu? %>
+  <div class='header-color'>
+    <div class='header-nav'>
+      <%= render partial: 'spree/shared/main_nav_bar' if store_menu? %>
+    </div>
+    <%= yield(:sub_header) if content_for?(:sub_header) %>
   </div>
 </header>

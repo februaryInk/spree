@@ -1,13 +1,39 @@
 <% @body_id = 'home-page' %>
-<% content_for :sidebar do %>
-  <div data-hook="homepage_sidebar_navigation">
-    <%= render partial: 'spree/shared/taxonomies' %>
+
+<% content_for(:sub_header) do %>
+  <div class='jumbotron'>
+    <section>
+      <div class='container'>
+        <div class='row'>
+          <div class='col-md-4 col-sm-6'>
+            
+          </div>
+          <div class='col-md-8 col-sm-6'>
+            <h1 class='text-signature text-white'>
+              Rock Solid Memories
+            </h1>
+            <h2 class='text-secondary'>
+              Stone engraving for the memories you'll never forget.
+            </h2>
+            <p class='text-white'>
+              Etiam erat lectus, pharetra sed eleifend fermentum, aliquet id nibh. Aliquam pellentesque dui vel iaculis fermentum. Etiam lacinia consequat lectus in tempus. Etiam ut ornare nisl. Maecenas tempor sem ex, ut sollicitudin velit facilisis aliquam. Nam aliquam risus sem, quis suscipit ipsum tempus et. Integer eu gravida nunc. Vivamus enim tortor, vestibulum vel diam sit amet, porttitor malesuada erat. 
+            </p>
+            <div>
+              <% Spree::Product.all.each do |product| %>
+                <%= link_to spree.product_path(product) do %>
+                  <span class='header-accent'>
+                    <%= product.name %>
+                  </span>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 <% end %>
 
-<div data-hook="homepage_products">
-  <% cache(cache_key_for_products) do %>
-    <%= render partial: 'spree/shared/products', locals: { products: @products } %>
-  <% end %>
-</div>
+<section>
+</section>
 

@@ -9,18 +9,57 @@
 .page-header {
   margin: 0 0 3em 0;
   padding: 0;
+  
+  .jumbotron {
+    background-color: transparent;
+    margin: 0;
+    z-index: 199;
+  }
 }
 
-.header-main {
-  background-color: $white;
+.header-accent {
+  background-color: $brand-secondary;
+  border-radius: 0.75em;
+  color: $white;
+  display: inline-block;
+  line-height: 1.5em;
+  margin-bottom: 0.75em;
+  margin-right: 0.75em;
+  padding: 0 0.75em;
+  text-transform: uppercase;
 }
 
-.header-nav {
+.header-color {
   background-color: $brand-primary;
+  position: relative;
+  
+  &::before {
+    background-image: image-url('gray-stones.jpeg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    bottom: 0;
+    content: '';
+    left: 0;
+    opacity: 0.40;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 0;
+  }
+  
+  & > * {
+    position: relative;
+    z-index: 200;
+  }
   
   a {
     color: $white;
   }
+}
+
+.header-main {
+  background-color: $white;
 }
 
 .navbar {
@@ -39,6 +78,10 @@
 }
 
 // -- Spree Layout Custom Rules -------------------------
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
 
 section {
   margin: 3em 0;
@@ -71,6 +114,18 @@ section {
 
 .progress-steps {
   margin-top: $line-height-computed;
+}
+
+.text-secondary {
+  color: $brand-secondary;
+}
+
+.text-signature {
+  font-family: Geared, Impact, serif;
+}
+
+.text-white {
+  color: white !important;
 }
 
 h1 {
