@@ -16,12 +16,15 @@
                 <%= link_to 'All Products', spree.products_path, class: 'dropdown-item' %>
               </li>
               <li class='divider' role='separator'></li>
-              <% Spree::Product.all.each do |product| %>
+              <% Spree::Product.order('name asc').each do |product| %>
                 <li>
-                  <%= link_to product.name, spree.products_path(product), class: 'dropdown-item' %>
+                  <%= link_to product.name, spree.product_path(product), class: 'dropdown-item' %>
                 </li>
               <% end %>
             </ul>
+          </li>
+          <li>
+            <%= link_to 'Contact Us', spree.contact_us_path, class: 'nav-link' %>
           </li>
         </ul>
       </div>

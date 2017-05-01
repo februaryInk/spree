@@ -26,4 +26,6 @@ Spree::Core::Engine.add_routes do
   get '/cart_link', to: 'store#cart_link', as: :cart_link
   
   get '/products/:id/query-variant', to: 'products#query_variant'
+  
+  get '/contact-us', to: 'home#contact_us'
 end

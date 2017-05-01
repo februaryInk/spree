@@ -2,6 +2,9 @@ module Spree
   class HomeController < Spree::StoreController
     helper 'spree/products'
     respond_to :html
+    
+    def contact_us
+    end
 
     def index
       @searcher = build_searcher(params.merge(include_images: true))

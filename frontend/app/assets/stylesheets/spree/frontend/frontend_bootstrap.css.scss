@@ -6,6 +6,17 @@
 
 // -- Spree Custom Header and Footer ---------------------
 
+.nav > li > a,
+.nav .open a {
+  font-size: 16px;
+  
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: $brand-secondary;
+  }
+}
+
 .page-header {
   margin: 0 0 3em 0;
   padding: 0;
@@ -34,14 +45,14 @@
   position: relative;
   
   &::before {
-    background-image: image-url('gray-stones.jpeg');
+    background-image: image-url('forest.jpeg');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     bottom: 0;
     content: '';
     left: 0;
-    opacity: 0.40;
+    opacity: 0.20;
     position: absolute;
     right: 0;
     top: 0;
