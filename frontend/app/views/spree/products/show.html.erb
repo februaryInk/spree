@@ -6,7 +6,7 @@
       <div data-hook="product_left_part_wrap">
         <div id="product-images" data-hook="product_images">
           <div id="main-image" class="panel panel-default" data-hook>
-            <%= product_image(@product, itemprop: 'image', class: 'product-image') %>
+            <%= large_image(@product, itemprop: 'image', class: 'product-image') %>
           </div>
           <div id="thumbnails" data-hook>
             <%= render partial: 'thumbnails' %>
