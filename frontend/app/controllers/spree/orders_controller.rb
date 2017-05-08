@@ -40,18 +40,18 @@ module Spree
 
     # Adds a new item to the order (creating a new order if none already exists)
     def populate
-      order         = current_order(create_order_if_necessary: true)
-      variant       = Spree::Variant.find_by(id: params[:variant_id])
-      customizations = params[:customizations] || ''
-      quantity      = params[:quantity].to_i
-      options       = params[:options] || {}
+      order          = current_order(create_order_if_necessary: true)
+      variant        = Spree::Variant.find_by(id: params[:variant_id])
+      customizations = params.require(:customizations).permit!.to_h || {}
+      quantity       = params[:quantity].to_i
+      options        = params[:options] || {}
       
       if variant
         # 2,147,483,647 is crazy. See issue #2695.
         if quantity.between?(1, 2_147_483_647)
           begin
             line_item = order.contents.add(variant, quantity, options)
-            line_item.update_attributes(customizations: customizations.to_xml)
+            line_item.update_attributes(customizations: customizations)
           rescue ActiveRecord::RecordInvalid => e
             error = e.record.errors.full_messages.join(", ")
           end

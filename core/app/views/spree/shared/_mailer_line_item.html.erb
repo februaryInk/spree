@@ -5,6 +5,17 @@
     </strong>
     <%= raw(line_item.variant.options_text) -%>
     (<%= line_item.variant.sku %>)
+    <ul>
+      <% line_item.customizations.each do |customization, value| %>
+        <li>
+          <% if value.present? %>
+            <%= "#{Spree::Customization.find_by(name: customization).presentation}: #{value}" %>
+          <% else %>
+            <%= "#{Spree::Customization.find_by(name: customization).presentation}: None" %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
   </td>
   <td class="six sub-columns last right">
     <%= line_item.quantity %> x <%= line_item.single_money %> = <%= line_item.display_amount %>

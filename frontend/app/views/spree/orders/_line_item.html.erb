@@ -20,6 +20,17 @@
       <span class="line-item-description" data-hook="line_item_description">
         <%= line_item_description_text(line_item.description) %>
       </span>
+      <ul>
+        <% line_item.customizations.each do |customization, value| %>
+          <li>
+            <% if value.present? %>
+              <%= "#{Spree::Customization.find_by(name: customization).presentation}: #{value}" %>
+            <% else %>
+              <%= "#{Spree::Customization.find_by(name: customization).presentation}: None" %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
     </td>
     <td class="lead text-primary cart-item-price" data-hook="cart_item_price">
       <%= line_item.single_money.to_html %>
