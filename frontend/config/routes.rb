@@ -28,5 +28,6 @@ Spree::Core::Engine.add_routes do
   get '/products/:id/query-variant', to: 'products#query_variant'
   
   get '/contact-us', to: 'home#contact_us'
-  get 'image-catalog', to: 'home#image_catalog'
+  get '/image-catalog', to: 'home#image_catalog'
+  get '/sizes-and-prices', to: 'home#sizes_and_prices'
 end
