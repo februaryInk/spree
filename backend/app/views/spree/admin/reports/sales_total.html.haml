@@ -1,0 +1,20 @@
+- content_for :page_title do
+  = link_to Spree.t(:reports), spree.admin_reports_url
+  \/
+  \#{Spree.t(:sales_totals)}
+.well
+  = render partial: 'spree/admin/shared/report_order_criteria'
+%table.table.table-bordered.admin-report{"data-hook" => "sales_total"}
+  %thead
+    %tr
+      %th= Spree.t(:currency)
+      %th= Spree.t(:item_total)
+      %th= Spree.t(:adjustment_total)
+      %th= Spree.t(:sales_total)
+  %tbody
+    - @totals.each do |key, row|
+      %tr
+        %td= key
+        %td= Spree::Money.new(row[:item_total], { currency: key })
+        %td= Spree::Money.new(row[:adjustment_total], { currency: key })
+        %td= Spree::Money.new(row[:sales_total], { currency: key })

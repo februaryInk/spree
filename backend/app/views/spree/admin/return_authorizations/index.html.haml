@@ -1,0 +1,34 @@
+= render partial: 'spree/admin/shared/order_tabs', locals: { current: :return_authorizations }
+- content_for :page_actions do
+  - if @order.shipments.any?(&:shipped?) && can?(:create, Spree::ReturnAuthorization)
+    = button_link_to Spree.t(:new_return_authorization), new_admin_order_return_authorization_url(@order), class: "btn-success", icon: 'add'
+- content_for :page_title do
+  \/ #{Spree.t(:return_authorizations)}
+- if @order.shipments.any?(&:shipped?) && @order.return_authorizations.any?
+  %table.table
+    %thead{"data-hook" => "rma_header"}
+      %tr
+        %th= Spree.t(:rma_number)
+        %th= Spree.t(:status)
+        %th= Spree.t(:pre_tax_total)
+        %th= "#{Spree.t('date')}/#{Spree.t('time')}"
+        %th
+    %tbody
+      - @return_authorizations.each do |return_authorization|
+        %tr{"data-hook" => "rma_row", :id => "#{spree_dom_id(return_authorization)}"}
+          %td= return_authorization.number
+          %td
+            %span{:class => "label label-#{return_authorization.state}"}
+              = Spree.t("return_authorization_states.#{return_authorization.state}")
+          %td= return_authorization.display_pre_tax_total.to_html
+          %td= pretty_time(return_authorization.created_at)
+          %td.actions.actions-2
+            = link_to_edit(return_authorization, no_text: true, class: 'edit') if can?(:edit, return_authorization)
+            - if can?(:delete, return_authorization) && !return_authorization.customer_returned_items?
+              = link_to_delete return_authorization, no_text: true
+- elsif @order.shipments.any?(&:shipped?)
+  .alert.alert-info.no-objects-found
+    = Spree.t(:no_resource_found, resource: plural_resource_name(Spree::ReturnAuthorization))
+- else
+  .alert.alert-info.no-objects-found{"data-hook" => "rma_cannot_create"}
+    = Spree.t(:cannot_create_returns)

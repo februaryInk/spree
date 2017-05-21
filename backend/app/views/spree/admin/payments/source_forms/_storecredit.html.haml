@@ -1,0 +1,7 @@
+- if @order.could_use_store_credit?
+  .alert.alert-info.text-center{"data-hook" => "admin_payment_store_credit_available"}
+    %h4= Spree.t('admin.user.available_store_credit', amount: @order.display_total_available_store_credit)
+- else
+  .alert.alert-danger.text-center{"data-hook" => "admin_payment_no_store_credit"}
+    %h4
+      %strong= Spree.t('admin.user.no_store_credit')

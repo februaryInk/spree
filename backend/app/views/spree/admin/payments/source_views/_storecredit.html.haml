@@ -1,0 +1,33 @@
+%fieldset{"data-hook" => "store_credit"}
+  %legend= Spree.t(:store_credit_name)
+  %table.table.table-condensed.table-bordered
+    %tr
+      %th{:width => "20%"}
+        = Spree.t(:used)
+        \:
+      %td= payment.source.display_amount_used
+    %tr
+      %th
+        = Spree.t(:amount)
+        \:
+      %td= payment.source.display_amount
+    %tr
+      %th
+        = Spree.t(:memo)
+        \:
+      %td= payment.source.memo
+    %tr
+      %th
+        = Spree.t(:type)
+        \:
+      %td= payment.source.category_name
+    %tr
+      %th
+        = Spree.t(:created_by)
+        \:
+      %td= payment.source.created_by_email
+    %tr
+      %th
+        = Spree.t(:issued_on)
+        \:
+      %td= pretty_time(payment.source.created_at)

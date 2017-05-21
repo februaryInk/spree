@@ -1,0 +1,34 @@
+%div{"data-hook" => "admin_payment_method_form_fields"}
+  .row{"data-hook" => "payment_method"}
+    .col-md-4
+      #preference-settings.form-group{"data-hook" => ""}
+        = f.label :type, Spree.t(:provider)
+        = collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {id: 'gtwy-type', class: 'select2'})
+        - unless @object.new_record?
+          = preference_fields(@object, f)
+          - if @object.respond_to?(:preferences)
+            #gateway-settings-warning.info.warning= Spree.t(:provider_settings_warning)
+      .form-group{"data-hook" => "display"}
+        = label_tag :payment_method_display_on, Spree.t(:display)
+        = select(:payment_method, :display_on, Spree::PaymentMethod::DISPLAY.collect { |display| [Spree.t(display), display.to_s] }, {}, {class: 'select2'})
+      .form-group{"data-hook" => "auto_capture"}
+        = label_tag :payment_method_auto_capture, Spree.t(:auto_capture)
+        = select(:payment_method, :auto_capture, [["#{Spree.t(:use_app_default)} (#{Spree::Config[:auto_capture]})", ''], [Spree.t(:say_yes), true], [Spree.t(:say_no), false]], {}, {class: 'select2'})
+      .form-group{"data-hook" => "active"}
+        %strong= Spree.t(:active)
+        .radio
+          = label_tag :payment_method_active_true do
+            = radio_button :payment_method, :active, true
+            = Spree.t(:say_yes)
+        .radio
+          = label_tag :payment_method_active_false do
+            = radio_button :payment_method, :active, false
+            = Spree.t(:say_no)
+    .col-md-8
+      = field_container :payment_method, :name, class: ['form-group'], 'data-hook' => 'name' do
+        = label_tag :payment_method_name, Spree.t(:name)
+        = text_field :payment_method, :name, class: 'form-control'
+        = error_message_on :payment_method, :name
+      = field_container :payment_method, :description, class: ['form-group'], 'data-hook' => 'description' do
+        = label_tag :payment_method_description, Spree.t(:description)
+        = text_area :payment_method, :description, { cols: 60, rows: 6, class: 'form-control' }

@@ -1,0 +1,33 @@
+- content_for :page_title do
+  = plural_resource_name(Spree::PaymentMethod)
+- content_for :page_actions do
+  = button_link_to Spree.t(:new_payment_method), new_object_url, class: "btn-success", icon: 'add', id: 'admin_new_payment_methods_link'
+- end if can? :create, Spree::PaymentMethod
+- if @payment_methods.any?
+  %table#listing_payment_methods.table.sortable{"data-hook" => "", "data-sortable-link" => update_positions_admin_payment_methods_url}
+    %thead
+      %tr{"data-hook" => "admin_payment_methods_index_headers"}
+        %th
+        %th= Spree.t(:name)
+        %th= Spree.t(:provider)
+        %th.text-center= Spree.t(:display)
+        %th.text-center= Spree.t(:active)
+        %th.actions{"data-hook" => "admin_payment_methods_index_header_actions"}
+    %tbody
+      - @payment_methods.each do |method|
+        %tr{"data-hook" => "admin_payment_methods_index_rows", :id => "#{spree_dom_id method}"}
+          %td.move-handle.text-center
+            - if can?(:edit, method)
+              %span.icon.icon-move.handle
+          %td= method.name
+          %td= method.type
+          %td.text-center= Spree.t(method.display_on)
+          %td.text-center= method.active ? Spree.t(:say_yes) : Spree.t(:say_no)
+          %td.actions.actions-2.text-right{"data-hook" => "admin_payment_methods_index_row_actions"}
+            = link_to_edit(method, no_text: true) if can? :edit, method
+            = link_to_delete(method, no_text: true) if can? :delete, method
+- else
+  .alert.alert-info.no-objects-found
+    = Spree.t(:no_resource_found, resource: plural_resource_name(Spree::PaymentMethod))
+    ,
+    \#{link_to(Spree.t(:add_one), new_object_url) if can? :create, Spree::PaymentMethod}!

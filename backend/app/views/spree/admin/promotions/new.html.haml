@@ -1,0 +1,8 @@
+- content_for :page_title do
+  = link_to Spree.t(:promotions), admin_promotions_url
+  \/
+  \#{Spree.t(:new_promotion)}
+= form_for :promotion, url: collection_url do |f|
+  = render partial: 'form', locals: { f: f }
+  .text-center
+    = render partial: 'spree/admin/shared/new_resource_links'

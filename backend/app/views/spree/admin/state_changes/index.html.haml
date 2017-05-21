@@ -1,0 +1,32 @@
+= render partial: 'spree/admin/shared/order_tabs', locals: { current: :state_changes }
+- content_for :page_title do
+  \/ #{plural_resource_name(Spree::StateChange)}
+  \/ #{Spree::StateChange.human_attribute_name(:state_changes)}
+- if @state_changes.any?
+  %table#listing_order_state_changes.table{"data-hook" => ""}
+    %thead
+      %tr{"data-hook" => "admin_orders_state_changes_headers"}
+        %th= Spree::StateChange.human_attribute_name(:type)
+        %th= Spree::StateChange.human_attribute_name(:state_from)
+        %th= Spree::StateChange.human_attribute_name(:state_to)
+        %th= Spree::StateChange.human_attribute_name(:user)
+        %th= Spree::StateChange.human_attribute_name(:timestamp)
+    %tbody
+      - @state_changes.each do |state_change|
+        %tr
+          %td= Spree.t("state_machine_states.#{state_change.name}")
+          %td= state_change.previous_state ? Spree.t(state_change.previous_state) : Spree.t(:previous_state_missing)
+          %td= Spree.t(state_change.next_state)
+          %td
+            - if state_change.user
+              - user_login = state_change.user.try(:login) || state_change.user.try(:email)
+              = link_to user_login, spree.admin_user_path(state_change.user)
+          %td
+            = pretty_time(state_change.created_at)
+            - if state_change.created_at != state_change.updated_at
+              %small
+                = Spree::StateChange.human_attribute_name(:updated)
+                \: #{pretty_time(state_change.updated_at)}
+- else
+  .alert.alert-info.no-objects-found
+    = Spree.t(:no_state_changes)

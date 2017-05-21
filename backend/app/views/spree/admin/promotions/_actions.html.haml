@@ -1,0 +1,20 @@
+.panel-heading
+  %h1.panel-title
+    = Spree.t(:promotion_actions)
+#action_fields.panel-body
+  = form_tag spree.admin_promotion_promotion_actions_path(@promotion), remote: true, id: 'new_promotion_action_form' do
+    - options = options_for_select(  Rails.application.config.spree.promotions.actions.map(&:name).map {|name| [ Spree.t("promotion_action_types.#{name.demodulize.underscore}.name"), name] } )
+    .form-group
+      = label_tag :action_type, Spree.t(:add_action_of_type)
+      = select_tag 'action_type', options, class: 'select2'
+    .form-actions
+      = button Spree.t(:add), 'plus', 'submit', class: "btn-success"
+  = form_for @promotion, url: spree.admin_promotion_path(@promotion), method: :put do |f|
+    #actions.filter_list.margint
+      - if @promotion.actions.any?
+        = render partial: 'promotion_action',  collection: @promotion.actions
+      - else
+        .alert.alert-warning
+          = Spree.t(:no_actions_added)
+    .actions.promotion-update
+      = button Spree.t('actions.update'), 'save'

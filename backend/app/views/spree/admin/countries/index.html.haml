@@ -1,0 +1,21 @@
+- content_for :page_title do
+  = plural_resource_name(Spree::Country)
+- content_for :page_actions do
+  = button_link_to Spree.t(:new_country), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_country' }
+- end if can? :create, Spree::Country
+%table#listing_countries.table{"data-hook" => ""}
+  %thead
+    %tr{"data-hook" => "tax_header"}
+      %th= Spree.t(:country_name)
+      %th= Spree.t(:iso_name)
+      %th= Spree.t(:states_required)
+      %th.actions
+  %tbody
+    - @countries.each do |country|
+      %tr{"data-hook" => "country_row", :id => "#{spree_dom_id country}"}
+        %td= country.name
+        %td= country.iso_name
+        %td.text-center= country.states_required? ? Spree.t(:say_yes) : Spree.t(:say_no)
+        %td.actions.actions-2.text-right
+          = link_to_edit(country, no_text: true) if can? :edit, country
+          = link_to_delete(country, no_text: true) if can? :delete, country

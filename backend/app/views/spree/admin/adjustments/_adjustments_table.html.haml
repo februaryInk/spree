@@ -1,0 +1,19 @@
+.panel-heading
+  %h3.panel-title= Spree.t(:order_adjustments)
+%table.table.table-bordered.adjustments{"data-hook" => "adjustments"}
+  %thead{"data-hook" => "adjustmment_head"}
+    %tr
+      %th= Spree.t(:adjustable)
+      %th= Spree.t(:description)
+      %th.text-center= Spree.t(:amount)
+      %th.text-center= Spree.t(:status)
+      %th.actions
+  %tbody
+    = render partial: "adjustment", collection: @adjustments
+- if can?(:edit, Spree::Adjustment)
+  .panel-footer
+    .row.text-center
+      .col-md-6
+        = button_to Spree.t(:open_all_adjustments), open_adjustments_admin_order_path(@order), method: :get, class: "btn btn-success"
+      .col-md-6
+        = button_to Spree.t(:close_all_adjustments), close_adjustments_admin_order_path(@order), method: :get, class: "btn btn-danger"

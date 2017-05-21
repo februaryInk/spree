@@ -1,0 +1,25 @@
+%fieldset{"data-hook" => "credit_card"}
+  %legend= Spree.t(:credit_card)
+  %table.table.table-condensed.table-bordered
+    %tr
+      %th{:width => "20%"}
+        = Spree.t(:name_on_card)
+        \:
+      %td= payment.source.name
+    %tr
+      %th
+        = Spree.t(:card_type)
+        \:
+      %td= payment.source.cc_type
+    %tr
+      %th
+        = Spree.t(:card_number)
+        \:
+      %td= payment.source.display_number
+    %tr
+      %th
+        = Spree.t(:expiration)
+        \:
+      %td
+        = payment.source.month
+        \/#{payment.source.year}

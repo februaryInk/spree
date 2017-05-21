@@ -1,0 +1,30 @@
+.row
+  .col-md-6{"data-hook" => "admin_zone_form_fields"}
+    .panel.panel-default
+      .panel-heading
+        %h1.panel-title= Spree.t(:general_settings)
+      .panel-body
+        = zone_form.field_container :name, class: ['form-group'] do
+          = zone_form.label :name, Spree.t(:name)
+          = zone_form.text_field :name, class: 'form-control'
+          = zone_form.error_message_on :name
+        = zone_form.field_container :description, class: ['form-group'] do
+          = zone_form.label :description, Spree.t(:description)
+          = zone_form.text_field :description, class: 'form-control'
+        .checkbox{"data-hook" => "default"}
+          = label_tag "zone[#{:default_tax}" do
+            = zone_form.check_box :default_tax
+            = Spree.t(:default_tax_zone)
+        .form-group{"data-hook" => "type"}
+          %strong= Spree.t(:type)
+          .radio
+            = label_tag :country_based do
+              = zone_form.radio_button('kind', 'country', { id: 'country_based' })
+              = Spree.t(:country_based)
+          .radio
+            = label_tag :state_based do
+              = zone_form.radio_button('kind', 'state', { id: 'state_based' })
+              = Spree.t(:state_based)
+  .col-md-6
+    = render partial: 'state_members', locals: { zone_form: zone_form }
+    = render partial: 'country_members', locals: { zone_form: zone_form }

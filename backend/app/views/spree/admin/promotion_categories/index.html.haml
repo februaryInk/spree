@@ -1,0 +1,23 @@
+- content_for :page_title do
+  = plural_resource_name(Spree::PromotionCategory)
+- content_for :page_actions do
+  = button_link_to Spree.t(:new_promotion_category), new_object_url, icon: 'add', class: 'btn-success'
+- if @promotion_categories.any?
+  %table.table
+    %thead
+      %th= Spree::PromotionCategory.human_attribute_name :name
+      %th= Spree::PromotionCategory.human_attribute_name :code
+      %th
+    %tbody
+      - @promotion_categories.each do |promotion_category|
+        %tr
+          %td= promotion_category.name
+          %td= promotion_category.code
+          %td.actions.actions-2.text-right
+            = link_to_edit promotion_category, no_text: true
+            = link_to_delete promotion_category, no_text: true
+- else
+  .alert.alert-info.no-objects-found
+    = Spree.t(:no_resource_found, resource: plural_resource_name(Spree::PromotionCategory))
+    ,
+    \#{link_to Spree.t(:add_one), new_object_url}!

@@ -1,0 +1,31 @@
+- content_for :page_title do
+  = plural_resource_name(Spree::StockLocation)
+- content_for :page_actions do
+  = button_link_to Spree.t(:new_stock_location), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_stock_location' }
+- end if can? :create, Spree::StockLocation
+- if @stock_locations.any?
+  %table#listing_stock_locations.table{"data-hook" => ""}
+    %thead
+      %tr{"data-hook" => "stock_locations_header"}
+        %th= Spree.t(:name)
+        %th= Spree.t(:status)
+        %th= Spree.t(:stock_movements)
+        %th.actions
+    %tbody
+      - @stock_locations.each do |stock_location|
+      - @edit_url = edit_admin_stock_location_path(stock_location)
+      - @delete_url = admin_stock_location_path(stock_location)
+        %tr{"data-hook" => "stock_location_row", :id => "#{spree_dom_id stock_location}"}
+          %td= display_name(stock_location)
+          %td
+            %span{:class => "state #{state(stock_location)}"}= Spree.t(state(stock_location))
+          %td
+            = link_to Spree.t(:stock_movements), admin_stock_location_stock_movements_path(stock_location.id)
+          %td.actions.actions-2.text-center
+            = link_to_edit(stock_location, no_text: true) if can? :create, stock_location
+            = link_to_delete(stock_location, no_text: true) if can? :create, stock_location
+- else
+  .alert.alert-info.no-objects-found
+    = Spree.t(:no_resource_found, resource: plural_resource_name(Spree::StockLocation))
+    ,
+    \#{link_to(Spree.t(:add_one), new_object_url) if can? :create, Spree::StockLocation}!

@@ -1,0 +1,18 @@
+%table.table.table-condensed.table-bordered
+  %thead
+    %tr{"data-hook" => "taxons_header"}
+      %th= Spree.t(:name)
+      %th= Spree.t(:path)
+      %th
+  %tbody
+    - taxons.each do |taxon|
+      %tr{"data-hook" => "taxons_row", :id => "#{spree_dom_id(taxon)}"}
+        %td= taxon.name
+        %td= taxon_path taxon
+        %td.actions
+          = link_to_delete taxon, url: remove_admin_product_taxon_url(@product, taxon), name: icon('delete') + ' ' + Spree.t(:remove)
+    - if taxons.empty?
+      %tr{"data-hook" => "taxons_none"}
+        %td{:colspan => "3"}
+          = Spree.t(:none)
+          \.

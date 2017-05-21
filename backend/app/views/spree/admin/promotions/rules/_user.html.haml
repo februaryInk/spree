@@ -1,0 +1,4 @@
+.panel-body
+  .form-group.no-marginb
+    = label_tag Spree.t('user_rule.choose_users')
+    %input.user_picker{:name => "#{param_prefix}[user_ids_string]", :type => "hidden", :value => "#{promotion_rule.user_ids.join(",")}"}/

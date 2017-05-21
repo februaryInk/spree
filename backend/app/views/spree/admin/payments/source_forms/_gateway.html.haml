@@ -1,0 +1,39 @@
+%fieldset{"data-id" => "credit-card"}
+  .form-group{"data-hook" => "previous_cards"}
+    %ul
+      - if previous_cards.any?
+        - previous_cards.each do |card|
+          %li
+            %label
+              = radio_button_tag :card, card.id, card == previous_cards.first
+              = card.display_number
+        %li
+          %label
+            = radio_button_tag :card, 'new', false, { id: "card_new#{payment_method.id}" }
+            = Spree.t(:use_new_cc)
+  .margint{"data-hook" => "", :id => "card_form#{payment_method.id}"}
+    - param_prefix = "payment_source[#{payment_method.id}]"
+    .form-group{"data-hook" => "card_number"}
+      = hidden_field_tag "#{param_prefix}[cc_type]", '', {class: 'ccType'}
+      = label_tag "card_number#{payment_method.id}", raw(Spree.t(:card_number) + content_tag(:span, ' *', class: 'required'))
+      = text_field_tag "#{param_prefix}[number]", '', class: 'required form-control cardNumber', id: "card_number#{payment_method.id}", maxlength: 19
+      %span#card_type{:style => "display:none;"}
+        (
+        %span#looks_like
+          = Spree.t(:card_type_is)
+          %span#type
+        %span#unrecognized= Spree.t(:unrecognized_card_type)
+        )
+    .form-group{"data-hook" => "card_name"}
+      = label_tag "card_name#{payment_method.id}", raw(Spree.t(:name) + content_tag(:span, ' *', class: 'required'))
+      = text_field_tag "#{param_prefix}[name]", '', id: "card_name#{payment_method.id}", class: 'required form-control', maxlength: 19
+    .form-group{"data-hook" => "card_expiration"}
+      = label_tag "card_expiry#{payment_method.id}", raw(Spree.t(:expiration) + content_tag(:span, ' *', class: 'required'))
+      %br/
+      = text_field_tag "#{param_prefix}[expiry]", '', id: "card_expiry#{payment_method.id}", class: "required cardExpiry form-control", placeholder: "MM / YY"
+    .form-group{"data-hook" => "card_code"}
+      = label_tag "card_code#{payment_method.id}", raw(Spree.t(:card_code) + content_tag(:span, ' *', class: "required"))
+      = text_field_tag "#{param_prefix}[verification_value]", '', id: "card_code#{payment_method.id}", class: 'required form-control cardCode', size: 5
+      %a.info.cvvLink{:href => "/content/cvv", :target => "_blank"}
+        (#{Spree.t(:what_is_this)})
+    = image_tag 'credit_cards/credit_card.gif', class: 'credit-card-image'

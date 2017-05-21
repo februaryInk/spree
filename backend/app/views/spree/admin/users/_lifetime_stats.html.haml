@@ -1,0 +1,30 @@
+.panel.panel-default{"data-hook" => "admin_user_lifetime_stats"}
+  .panel-heading
+    %h1.panel-title
+      = Spree.t(:lifetime_stats)
+  %table#user-lifetime-stats.table{"data-hook" => ""}
+    %tr
+      %td{:width => "30%"}
+        = Spree.t(:total_sales)
+        \:
+      %td= @user.display_lifetime_value.to_html
+    %tr
+      %td
+        = Spree.t(:num_orders)
+        \:
+      %td= @user.order_count.to_i
+    %tr
+      %td
+        = Spree.t(:average_order_value)
+        \:
+      %td= @user.display_average_order_value.to_html
+    %tr
+      %td
+        = Spree.t('admin.user.store_credits')
+        \:
+      %td= Spree::Money.new(@user.total_available_store_credit)
+    %tr
+      %td
+        = Spree.t(:member_since)
+        \:
+      %td= pretty_time(@user.created_at)

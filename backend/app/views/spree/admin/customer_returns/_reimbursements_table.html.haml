@@ -1,0 +1,24 @@
+%table.table.table-condensed.table-bordered
+  %thead{"data-hook" => "customer_return_header"}
+    %tr
+      %th= Spree.t(:number)
+      %th= Spree.t(:total)
+      %th= Spree.t(:status)
+      %th= "#{Spree.t('date')}/#{Spree.t('time')}"
+      %th
+  %tbody
+    - reimbursements.each do |reimbursement|
+      %tr{"data-hook" => "reimbursement_row", :id => "#{spree_dom_id(reimbursement)}"}
+        %td
+          - if reimbursement.reimbursed?
+            = link_to reimbursement.number, url_for([:admin, @order, reimbursement])
+          - else
+            = reimbursement.number
+        %td= reimbursement.display_total
+        %td
+          %span{:class => "state #{reimbursement_status_color(reimbursement)}"}
+            = reimbursement.reimbursement_status
+        %td= pretty_time(reimbursement.created_at)
+        %td.actions.actions-1
+          - if !reimbursement.reimbursed?
+            = link_to_edit_url(url_for([:edit, :admin, @order, reimbursement]), title: "admin_edit_#{dom_id(reimbursement)}", no_text: true) if can?(:edit, reimbursement)

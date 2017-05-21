@@ -1,0 +1,7 @@
+- content_for :page_title do
+  = Spree.t(:taxons)
+.taxon-products-view
+  .form-group
+    = text_field_tag :taxon_id
+  %ul#taxon_products.taxon
+  = render partial: "spree/admin/products/autocomplete", formats: :js

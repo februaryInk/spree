@@ -1,0 +1,12 @@
+%tr.product_property.fields{"data-hook" => "product_property", :id => "spree_#{dom_id(f.object)}"}
+  %td.move-handle
+    - if f.object.persisted? && can?(:edit, f.object)
+      %span.icon.icon-move.handle
+      = f.hidden_field :id
+  %td.property_name
+    = f.text_field :property_name, class: 'autocomplete form-control'
+  %td.value
+    = f.text_field :value, class: 'form-control'
+  %td.actions.actions-1
+    - if f.object.persisted? && can?(:destroy, f.object)
+      = link_to_delete f.object, no_text: true

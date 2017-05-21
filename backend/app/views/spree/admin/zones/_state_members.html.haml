@@ -1,0 +1,9 @@
+#state_members{"data-hook" => "member"}
+  .panel.panel-default
+    .panel-heading
+      %h1.panel-title
+        = Spree.t(:states)
+    .panel-body
+      = zone_form.field_container :state_ids, class: ['form-group'] do
+        = zone_form.label :state_ids, Spree.t(:states)
+        = zone_form.collection_select :state_ids, @states, :id, :name, {}, { multiple: true, class: "select2" }

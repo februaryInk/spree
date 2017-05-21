@@ -1,0 +1,11 @@
+- args = params.clone
+- if defined?(per_page_action)
+  - args[:action] = per_page_action
+.row.index-pagination-row
+  .col-sm-6
+    = paginate collection
+  .col-sm-6
+    .pagination-wrap
+      = form_tag(per_page_dropdown_params(args), { method: :get, class: 'js-per-page-form form-inline' }) do
+        = per_page_dropdown
+      .clearfix

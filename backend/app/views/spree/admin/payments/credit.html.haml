@@ -1,0 +1,11 @@
+= render partial: 'spree/admin/shared/order_tabs', locals: { current: :credit_cards }
+- content_for :page_title do
+  \/ #{Spree.t(:refund)}
+= form_tag do
+  %h3= Spree.t(:refund)
+  %fieldset{"data-hook" => "credit"}
+    %p
+      = label_tag :amount, Spree.t(:amount)
+      = text_field_tag :amount, @payment.amount
+    %p.form-actions
+      = button Spree.t(:make_refund)

@@ -1,0 +1,18 @@
+= render partial: 'spree/admin/shared/order_tabs', locals: { current: :reimbursements }
+- content_for :page_title do
+  \/ #{Spree.t(:edit_reimbursement)}
+= render partial: 'spree/admin/shared/error_messages', locals: { target: @customer_return }
+%table.table
+  %thead{"data-hook" => "customer_return_header"}
+    %tr
+      %th= Spree.t(:id)
+      %th= Spree.t(:total)
+      %th= Spree.t(:status)
+      %th= "#{Spree.t('date')}/#{Spree.t('time')}"
+  %tbody
+    - @reimbursements.each do |reimbursement|
+      %tr{"data-hook" => "reimbursement_row", :id => "#{spree_dom_id(reimbursement)}"}
+        %td= reimbursement.id
+        %td= reimbursement.total
+        %td= reimbursement.reimbursement_status
+        %td= pretty_time(reimbursement.created_at)

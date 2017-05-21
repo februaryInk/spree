@@ -1,0 +1,61 @@
+%div{"data-hook" => "admin_customer_detail_form_fields"}
+  .panel.panel-default{"data-hook" => "customer_guest"}
+    .panel-heading
+      %h1.panel-title
+        = Spree.t(:account)
+    .panel-body
+      .row{"data-hook" => "customer_fields"}
+        .col-md-8
+          .form-group
+            = f.label :email, Spree.t(:email)
+            - if can? :edit, @order.user
+              = f.email_field :email, class: 'form-control'
+            - else
+              %p= @order.user.try(:email) || @order.email
+        .col-md-4
+          .form-group
+            %strong= label_tag nil, Spree.t(:guest_checkout)
+            - guest = @order.user.nil?
+            - if @order.completed?
+              %div
+                %span.badge
+                  = guest ? Spree.t(:say_yes) : Spree.t(:say_no)
+                  = hidden_field_tag :guest_checkout, guest
+            - else
+              .radio.no-margint
+                = label_tag :guest_checkout_true do
+                  = radio_button_tag :guest_checkout, true, guest
+                  = Spree.t(:say_yes)
+              .radio
+                = label_tag :guest_checkout_false do
+                  = radio_button_tag :guest_checkout, false, !guest, disabled: @order.cart?
+                  = Spree.t(:say_no)
+              = hidden_field_tag :user_id, @order.user_id
+  .row
+    .col-md-6{"data-hook" => "bill_address_wrapper"}
+      .panel.panel-default
+        .panel-heading
+          %h1.panel-title= Spree.t(:billing_address)
+        .panel-body
+          - if can? :edit, @order.user
+            = f.fields_for :bill_address do |ba_form|
+              = render 'spree/admin/shared/address_form', f: ba_form, type: "billing"
+          - else
+            = render 'spree/admin/shared/address', address: @order.bill_address
+    .col-md-6{"data-hook" => "ship_address_wrapper"}
+      .panel.panel-default
+        .panel-heading
+          %h1.panel-title= Spree.t(:shipping_address)
+        .panel-body
+          - if can? :edit, @order.user
+            = f.fields_for :ship_address do |sa_form|
+              .form-group
+                %span{"data-hook" => "use_billing"}
+                  = check_box_tag 'order[use_billing]', '1', @order.shipping_eq_billing_address?
+                  = label_tag 'order[use_billing]', Spree.t(:use_billing_address)
+              = render 'spree/admin/shared/address_form', f: sa_form, type: 'shipping'
+          - else
+            = render 'spree/admin/shared/address', address: @order.ship_address
+  - if can? :edit, @order.user
+    .form-actions{"data-hook" => "buttons"}
+      = button Spree.t('actions.update'), 'save'

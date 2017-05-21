@@ -1,0 +1,35 @@
+- content_for :page_title do
+  = plural_resource_name(Spree::TaxRate)
+- content_for :page_actions do
+  = button_link_to Spree.t(:new_tax_rate), new_object_url, class: "btn-success", icon: 'add'
+- end if can? :create, Spree::TaxRate
+- if @tax_rates.any?
+  %table.table
+    %thead
+      %tr{"data-hook" => "rate_header"}
+        %th= Spree.t(:zone)
+        %th= Spree.t(:name)
+        %th= Spree.t(:tax_category)
+        %th= Spree.t(:amount)
+        %th= Spree.t(:included_in_price)
+        %th= Spree.t(:show_rate_in_label)
+        %th= Spree.t(:calculator)
+        %th
+    %tbody
+      - @tax_rates.each do |tax_rate|
+        %tr{"data-hook" => "rate_row", :id => "#{spree_dom_id tax_rate}"}
+          %td= tax_rate.zone.try(:name) || Spree.t(:not_available)
+          %td= tax_rate.name
+          %td= tax_rate.tax_category.try(:name) || Spree.t(:not_available)
+          %td= tax_rate.amount
+          %td= tax_rate.included_in_price? ? Spree.t(:say_yes) : Spree.t(:say_no)
+          %td= tax_rate.show_rate_in_label? ? Spree.t(:say_yes) : Spree.t(:say_no)
+          %td= tax_rate.calculator.to_s
+          %td.actions.actions-2.text-right
+            = link_to_edit(tax_rate, no_text: true) if can? :edit, tax_rate
+            = link_to_delete(tax_rate, no_text: true) if can? :delete, tax_rate
+- else
+  .alert.alert-info.no-objects-found
+    = Spree.t(:no_resource_found, resource: plural_resource_name(Spree::TaxRate))
+    ,
+    \#{link_to(Spree.t(:add_one), new_object_url) if can? :create, Spree::TaxRate}!

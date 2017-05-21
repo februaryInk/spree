@@ -1,0 +1,31 @@
+%table.table.table-condensed.table-bordered
+  %thead
+    %tr
+      %th
+        = check_box_tag 'select-all'
+      %th= Spree.t(:product)
+      %th= Spree.t(:sku)
+      %th= Spree.t(:pre_tax_amount)
+      %th= Spree.t(:exchange_for)
+      %th= Spree.t(:resellable)
+  %tbody
+    = f.fields_for :return_items, return_items do |item_fields|
+      - return_item = item_fields.object
+      %tr
+        %td.align-center
+          %div{:style => "display:none"}
+            = item_fields.hidden_field :inventory_unit_id
+            = item_fields.hidden_field :return_authorization_id
+            = item_fields.hidden_field :pre_tax_amount
+          = item_fields.check_box :returned, {checked: false, class: 'add-item', "data-price" => return_item.pre_tax_amount}, '1', '0'
+        %td
+          .variant-name= return_item.inventory_unit.variant.name
+          .variant-options= return_item.inventory_unit.variant.options_text
+        %td
+          = return_item.inventory_unit.variant.sku
+        %td.align-center
+          = return_item.display_pre_tax_amount
+        %td.align-center
+          = return_item.exchange_variant.try(:exchange_name)
+        %td.align-center
+          = item_fields.check_box :resellable, { checked: return_item.resellable }

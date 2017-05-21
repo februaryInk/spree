@@ -1,0 +1,12 @@
+- if @payment.capture_events.exists?
+  %h3= Spree.t(:capture_events)
+  %table#capture_events.table.table-condensed.table-bordered
+    %thead
+      %tr{"data-hook" => "payments_header"}
+        %th= "#{Spree.t('date')}/#{Spree.t('time')}"
+        %th= Spree.t(:amount)
+    %tbody
+      - @payment.capture_events.each do |capture_event|
+        %tr{"data-hook" => "capture_events_row", :id => "#{dom_id(capture_event)}"}
+          %td= pretty_time(capture_event.created_at)
+          %td= capture_event.display_amount

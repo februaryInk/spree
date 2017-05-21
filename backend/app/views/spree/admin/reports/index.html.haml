@@ -1,0 +1,12 @@
+- content_for :page_title do
+  = Spree.t(:reports)
+%table.table
+  %thead
+    %tr{"data-hook" => "reports_header"}
+      %th= Spree.t(:name)
+      %th= Spree.t(:description)
+  %tbody
+    - @reports.each do |key, value|
+      %tr{"data-hook" => "reports_row"}
+        %td= link_to value[:name], send("#{key}_admin_reports_url".to_sym)
+        %td= value[:description]

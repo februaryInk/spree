@@ -1,0 +1,10 @@
+- if target && target.errors.any?
+  #errorExplanation.errorExplanation.alert.alert-danger{"data-hook" => ""}
+    %p
+      %strong
+        = Spree.t(:errors_prohibited_this_record_from_being_saved, count: target.errors.size)
+        \:
+      %br/
+    %ul.ul-with-markup
+      - target.errors.full_messages.each do |msg|
+        %li= msg

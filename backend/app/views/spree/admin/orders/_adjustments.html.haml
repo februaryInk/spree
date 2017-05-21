@@ -1,0 +1,23 @@
+- if adjustments.eligible.exists?
+  .panel.panel-default
+    .panel-heading
+      %h1.panel-title
+        = title
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th= Spree.t('name')
+          %th= Spree.t('amount')
+      %tbody#order-charges{"data-hook" => "order_details_adjustments"}
+        - adjustments.eligible.group_by(&:label).each do |label, adjustments|
+          %tr.total
+            %td
+              %strong
+                = label
+                \:
+            %td.total
+              %span
+                = Spree::Money.new(                                  |
+                    adjustments.sum(&:amount),                       |
+                    currency: adjustments.first.order.try(:currency) |
+                  )                                                  |

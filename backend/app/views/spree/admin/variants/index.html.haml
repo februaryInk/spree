@@ -1,0 +1,29 @@
+= render partial: 'spree/admin/shared/product_tabs', locals: {current: :variants}
+#new_variant
+- if @variants.any?
+  %table.table.sortable{"data-sortable-link" => ""}
+  = update_positions_admin_product_variants_path(@product)
+  "&gt;
+  %thead{"data-hook" => "variants_header"}
+    %tr
+      %th{:colspan => "2"}= Spree.t(:options)
+      %th= Spree.t(:price)
+      %th= Spree.t(:sku)
+      %th.actions
+  %tbody
+    - @variants.each do |variant|
+      %tr{:id => ""}
+      = spree_dom_id variant
+      " #{'style=color:red;' if variant.deleted?} data-hook="variants_row"&gt;
+      %td.move-handle
+        - if can? :edit, variant
+          %span.icon.icon-move.handle
+      %td= variant.options_text
+      %td= variant.display_price.to_html
+      %td= variant.sku
+      %td.actions.actions-2.text-right
+        = link_to_edit(variant, no_text: true) if can?(:edit, variant)  !variant.deleted?
+        = link_to_delete(variant, no_text: true) if can?(:destroy, variant)  !variant.deleted?
+  - unless @product.has_variants?
+    %tr
+      %td{:colspan => "5"}= Spree.t(:none)

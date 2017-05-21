@@ -1,0 +1,14 @@
+- if content_for?(:table_filter)
+  .filter-wrap.row
+    .col-sm-12
+      .input-group.index-filter-button
+        %span.input-group-btn
+          %button.btn.btn-default.js-show-index-filters{:type => "button"}
+            %span.icon.icon-chevron-right
+            = Spree.t(:filter)
+        = form_tag request.fullpath, id: "quick-search" do
+          = text_field_tag :quick_search, nil, class: "form-control js-quick-search", placeholder: Spree.t(:quick_search)
+      - unless defined?(simple)
+        #table-filter.well.filter-well{"data-hook" => ""}
+          = yield :table_filter
+  .table-active-filters.js-filters

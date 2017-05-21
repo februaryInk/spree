@@ -1,0 +1,5 @@
+- if success = flash.discard(:success)
+  show_flash('success', "#{j success}");
+- if error = flash.discard(:error)
+  show_flash('error', "#{j error}");
+= render partial: '/spree/admin/shared/update_order_state' if @order
