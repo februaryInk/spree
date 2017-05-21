@@ -1,0 +1,82 @@
+- address_id = address_type.chars.first
+.inner{"data-hook" => "<haml_loud"}
+  "\#{address_type}_inner" &gt;
+  %p.form-group{:id => "<haml_loud"}
+    "\#{address_id}firstname" &gt;
+    \#{form.label :firstname do}
+      = Spree.t(:first_name)
+      %abbr.required{:title => "required"} *
+    = form.text_field :firstname, class: 'form-control required'
+  %p.form-group{:id => "<haml_loud"}
+    "\#{address_id}lastname" &gt;
+    \#{form.label :lastname do}
+      = Spree.t(:last_name)
+      %abbr.required{:title => "required"} *
+    = form.text_field :lastname, class: 'form-control required'
+  - if Spree::Config[:company]
+    %p.form-group{:id => "<haml_loud"}
+      "\#{address_id}company" &gt;
+      \#{form.label :company, Spree.t(:company)}
+      \#{form.text_field :company, class: 'form-control'}
+  %p.form-group{:id => "<haml_loud"}
+    "\#{address_id}address1" &gt;
+    \#{form.label :address1 do}
+      = Spree.t(:street_address)
+      %abbr.required{:title => "required"} *
+    = form.text_field :address1, class: 'form-control  required'
+  %p.form-group{:id => "<haml_loud"}
+    "\#{address_id}address2" &gt;
+    \#{form.label :address2, Spree.t(:street_address_2)}
+    \#{form.text_field :address2, class: 'form-control'}
+  %p.form-group{:id => "<haml_loud"}
+    "\#{address_id}city" &gt;
+    \#{form.label :city do}
+      = Spree.t(:city)
+      %abbr.required{:title => "required"} *
+    = form.text_field :city, class: 'form-control required'
+  %p.form-group{:id => "<haml_loud"}
+    "\#{address_id}country" &gt;
+    \#{form.label :country_id do}
+      = Spree.t(:country)
+      %abbr.required{:title => "required"} *
+    %span{:id => "<haml_loud"}
+      "\#{address_id}country-selection" &gt;
+      \#{form.collection_select :country_id, available_countries, :id, :name, {}, {class: 'form-control required'}}
+  - if Spree::Config[:address_requires_state]
+    %p.form-group{:id => "<haml_loud"}
+      "\#{address_id}state" &gt;
+      - have_states = !address.country.states.empty?
+      = form.label :state do
+        = Spree.t(:state)
+        %abbr.required{:id => "<haml_loud", :title => "required"} "\#{address_id}state-required"&gt;*
+      != state_elements = [                                                                       |
+        form.collection_select(:state_id, address.country.states,                                 |
+                           :id, :name,                                                            |
+                           {include_blank: true},                                                 |
+                           {class: have_states ? 'form-control required' : 'form-control hidden', |
+                           disabled: !have_states}) +                                             |
+        form.text_field(:state_name,                                                              |
+                           class: !have_states ? 'form-control required' : 'form-control hidden', |
+                           disabled: have_states)                                                 |
+        ].join.gsub('"', "'").gsub("\n", "")                                                      |
+    %noscript
+      = form.text_field :state_name, class: 'form-control required'
+  %p.form-group{:id => "<haml_loud"}
+    "\#{address_id}zipcode" &gt;
+    \#{form.label :zipcode do}
+      = Spree.t(:zip)
+      - if address.require_zipcode?
+        %abbr.required{:title => "required"} *
+    = form.text_field :zipcode, class: "form-control #{'required' if address.require_zipcode?}"
+  %p.form-group{:id => "<haml_loud"}
+    "\#{address_id}phone" &gt;
+    \#{form.label :phone do}
+      = Spree.t(:phone)
+      - if address.require_phone?
+        %abbr.required{:title => "required"} *
+    = form.phone_field :phone, class: "form-control #{'required' if address.require_phone?}"
+  - if Spree::Config[:alternative_shipping_phone]
+    %p.form-group{:id => "<haml_loud"}
+      "\#{address_id}altphone" &gt;
+      \#{form.label :alternative_phone, Spree.t(:alternative_phone)}
+      \#{form.phone_field :alternative_phone, class: 'form-control'}

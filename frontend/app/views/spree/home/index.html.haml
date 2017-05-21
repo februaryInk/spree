@@ -1,0 +1,21 @@
+- @body_id = 'home-page'
+- content_for(:sub_header) do
+  .jumbotron
+    %section
+      .container
+        .row
+          .col-md-4.col-sm-6
+          .col-md-8.col-sm-6
+            %h1.text-signature.text-white
+              Rock Solid Memories
+            %h2.text-secondary
+              Stone engraving for the memories you'll never forget.
+            %p.text-white
+              Welcome to the Rock Solid Memories website. Our company custom engraves rocks for a variety of occasions and purposes.
+            %div
+              - Spree::Product.order('name asc').each do |product|
+                = link_to spree.product_path(product) do
+                  %span.header-accent
+                    = product.name
+%section
+  = render partial: 'spree/shared/products', locals: { products: @products, taxon: @taxon }

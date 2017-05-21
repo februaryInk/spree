@@ -1,0 +1,9 @@
+%nav#top-nav-bar.navbar.col-md-8.col-sm-9
+  %ul#nav-bar.nav.navbar-nav.navbar-right
+    %li#search-bar{"data-hook" => ""}
+    %li#link-to-cart{"data-hook" => ""}
+      %noscript
+        = link_to Spree.t(:cart), '/cart'
+    
+    :javascript
+      Spree.fetch_cart()
