@@ -4,6 +4,9 @@
 - if can?(:admin, Spree::ReturnAuthorization) || can?(:admin, Spree::CustomerReturn)
   %ul.nav.nav-sidebar
     = main_menu_tree Spree.t(:returns), icon: "transfer", sub_menu: "returns", url: "#sidebar-returns"
+- if can? :admin, Spree::Artwork
+  %ul.nav.nav-sidebar
+    = main_menu_tree 'Artwork', icon: 'picture', sub_menu: 'artwork', url: '#sidebar-artwork'
 - if can? :admin, Spree::Product
   %ul.nav.nav-sidebar
     = main_menu_tree Spree.t(:products), icon: "th-large", sub_menu: "product", url: "#sidebar-product"

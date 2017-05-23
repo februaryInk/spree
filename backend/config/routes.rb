@@ -1,5 +1,7 @@
 Spree::Core::Engine.add_routes do
   namespace :admin, path: Spree.admin_path do
+    resources :collections, except: [:show]
+    
     resources :promotions do
       resources :promotion_rules
       resources :promotion_actions
