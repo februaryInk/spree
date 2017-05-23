@@ -5,6 +5,8 @@ module Spree
     
     has_one :image, as: :viewable, dependent: :destroy, class_name: 'Spree::Image'
     
+    accepts_nested_attributes_for :image
+    
     validates :code, presence: true
     validates :complexity, presence: true
   end

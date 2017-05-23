@@ -1,0 +1,23 @@
+- content_for :page_title do
+  = plural_resource_name(Spree::Artwork)
+- content_for :page_actions do
+  = button_link_to Spree.t(:new_artwork), new_object_url, { class: 'btn-success', icon: 'add', 'data-update' => 'new_artwork', id: 'new_artwork_link' }
+- if @artworks.any?
+  %table#listing_artworks.table{ 'data-hook' => '' }
+    %thead
+      %tr{'data-hook' => 'artworks_header'}
+        %th= :code
+        %th.actions
+    %tbody
+      - @artworks.each do |artwork|
+        %tr{ 'data-hook' => 'artworks_row', :id => spree_dom_id(artwork) }
+          %td= artwork.code
+          %td.image= image_tag artwork.image.attachment.url(:mini)
+          %td.actions.actions-2.text-right
+            = link_to_edit(artwork, no_text: true, class: 'admin_edit_artwork')
+            = link_to_delete(artwork, no_text: true)
+- else
+  .alert.alert-info.no-objects-found
+    = Spree.t(:no_resource_found, resource: plural_resource_name(Spree::Artwork))
+    ,
+    \#{link_to Spree.t(:add_one), new_object_url}!

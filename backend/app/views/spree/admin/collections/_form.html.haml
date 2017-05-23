@@ -14,4 +14,4 @@
     = f.field_container :artwork_ids, class: ['form-group'] do
       = f.label :artwork_ids, 'Artworks'
       %br
-      = f.select :artwork_ids, Spree::Artwork.all.order(:code), {  }, { class: 'select2', multiple: true }
+      = f.select :artwork_ids, Spree::Artwork.all.order(:code).map { |a| [a.code, a.id] }, {  }, { class: 'select2', multiple: true }

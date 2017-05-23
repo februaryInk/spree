@@ -1,0 +1,9 @@
+= render partial: 'spree/admin/shared/error_messages', locals: { target: @artwork }
+- content_for :page_title do
+  = link_to Spree.t(:artworks), spree.admin_artworks_url
+  \/
+  = Spree.t(:new_artwork)
+= form_for [:admin, @artwork] do |f|
+  %fieldset{"data-hook" => 'new_artwork'}
+    = render partial: 'form', locals: { f: f }
+    = render partial: 'spree/admin/shared/new_resource_links'
