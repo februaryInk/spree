@@ -1,7 +1,7 @@
 - content_for :page_title do
   = link_to Spree.t(:artworks), spree.admin_artworks_url
   \/
-  = @artwork.name
+  = @artwork.code
 = render partial: 'spree/admin/shared/error_messages', locals: { target: @artwork }
 = form_for [:admin, @artwork] do |f|
   %fieldset

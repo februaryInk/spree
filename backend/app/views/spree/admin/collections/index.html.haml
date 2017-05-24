@@ -12,6 +12,10 @@
       - @collections.each do |collection|
         %tr{ 'data-hook' => 'collections_row', :id => spree_dom_id(collection) }
           %td= collection.name
+          %td
+            - collection.artworks.each do |artwork|
+              = link_to spree.admin_artwork_path(artwork) do
+                = image_tag artwork.image.attachment.url(:mini), title: artwork.code
           %td.actions.actions-2.text-right
             = link_to_edit(collection, no_text: true, class: 'admin_edit_collection')
             = link_to_delete(collection, no_text: true)

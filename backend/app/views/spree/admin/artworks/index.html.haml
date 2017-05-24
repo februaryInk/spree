@@ -6,12 +6,15 @@
   %table#listing_artworks.table{ 'data-hook' => '' }
     %thead
       %tr{'data-hook' => 'artworks_header'}
-        %th= :code
+        %th= Spree.t(:code)
+        %th= Spree.t(:complexity)
+        %th
         %th.actions
     %tbody
       - @artworks.each do |artwork|
         %tr{ 'data-hook' => 'artworks_row', :id => spree_dom_id(artwork) }
-          %td= artwork.code
+          %td= link_to artwork.code, spree.admin_artwork_path(artwork)
+          %td= artwork.complexity
           %td.image= image_tag artwork.image.attachment.url(:mini)
           %td.actions.actions-2.text-right
             = link_to_edit(artwork, no_text: true, class: 'admin_edit_artwork')

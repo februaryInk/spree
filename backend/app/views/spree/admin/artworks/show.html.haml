@@ -1,0 +1,6 @@
+- content_for :page_title do
+  = link_to Spree.t(:artworks), spree.admin_artworks_url
+  \/
+  = @artwork.code
+= image_tag @artwork.image.attachment.url(:large)
+= simple_format @artwork.description
