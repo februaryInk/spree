@@ -4,3 +4,5 @@
   = @artwork.code
 = image_tag @artwork.image.attachment.url(:large)
 = simple_format @artwork.description
+%p
+  Source: #{@artwork.source}
