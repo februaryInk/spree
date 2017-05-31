@@ -1,0 +1,35 @@
+%section
+  .container
+    .row
+      %h1
+        Artwork Library
+      %p
+        = "We have an ever-growing library of artwork that spans a variety of subjects. We also have access to hundreds of graphics not shown here. If you don't see an image you like in our library, we can help find one that suits you better. We can also accommodate #{content_tag :b, 'custom artwork'} that you provide us. Feel free to #{link_to 'contact us', contact_us_path} with special requests.".html_safe
+      %p
+        When choosing the artwork for your custom engraved stone, please consider the size of your rock and the text you want to display with it. Highly detailed graphics may not display as well on smaller rocks.
+    .row
+      %ul.js-tabs.tab-band
+        %li{ class: '-open', 'data-target-id': 'tab-all' }
+          All
+        - @collections.each do |collection|
+          %li{ 'data-target-id': "tab-#{collection.name.downcase.gsub(' ', '-').gsub(',', '')}" }
+            = collection.name
+    .row
+      .tab-content-container
+        #tab-all.tab-content.-open
+          - @artworks.each do |artwork|
+            .col-md-3.col-sm-3
+              .panel.panel-default.catalog-item
+                = image_tag artwork.image.attachment.url
+                .panel-footer.text-center
+                  %span
+                    = "Image Code: #{artwork.code}"
+        - @collections.each do |collection|
+          %div.tab-content{ id: "tab-#{collection.name.downcase.gsub(' ', '-').gsub(',', '')}" }
+            - collection.artworks.each do |artwork|
+              .col-md-3.col-sm-3
+                .panel.panel-default.catalog-item
+                  = image_tag artwork.image.attachment.url
+                  .panel-footer.text-center
+                    %span
+                      = "Image Code: #{artwork.code}"

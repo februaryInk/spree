@@ -1,0 +1,36 @@
+.tab-content {
+    display: none;
+    
+    &.-open {
+        display: block;
+    }
+}
+
+.tab-band {
+    display: block;
+    list-style: none;
+    overflow: hidden;
+    padding-top: 2em;
+    text-align: center;
+    width: 100%;
+    
+    li {
+        border: 2px solid #edeae5;
+        border-radius: 1.5em;
+        cursor: pointer;
+        display: inline-block;
+        float: left;
+        line-height: 1em;
+        margin: 0.5em;
+        padding: 1em 2em;
+        user-select: none;
+        
+        &.-open {
+            background-color: #72b7bc;
+        }
+    }
+}
+
+.tab-content-container {
+    padding-top: 16px;
+}

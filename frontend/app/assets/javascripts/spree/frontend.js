@@ -7,3 +7,4 @@
 //= require spree/frontend/checkout/address
 //= require spree/frontend/checkout/payment
 //= require spree/frontend/product
+//= require spree/frontend/tabs
