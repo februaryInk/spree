@@ -1,0 +1,8 @@
+%header#header.page-header{"data-hook" => ""}
+  .header-main
+    .container
+      .row
+        = render partial: 'spree/shared/nav_bar'
+  .header-nav
+    = render partial: 'spree/shared/main_nav_bar' if store_menu?
+  = yield(:sub_header) if content_for?(:sub_header)

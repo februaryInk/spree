@@ -14,8 +14,9 @@
                 = link_to 'All Products', spree.products_path, class: 'dropdown-item'
               %li.divider{:role => "separator"}
               - Spree::Product.order('name asc').each do |product|
-                %li
-                  = link_to product.name, spree.product_path(product), class: 'dropdown-item'
+                - if product.images.any?
+                  %li
+                    = link_to product.name, spree.product_path(product), class: 'dropdown-item'
           %li
             = link_to 'Sizes and Prices', spree.sizes_and_prices_path, class: 'nav-link'
           %li

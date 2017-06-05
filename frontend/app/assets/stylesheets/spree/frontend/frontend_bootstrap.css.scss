@@ -4,6 +4,7 @@
 @import "variables";
 @import "bootstrap";
 
+
 // -- Spree Custom Header and Footer ---------------------
 
 .catalog-item {
@@ -76,16 +77,26 @@
   }
 }
 
-.header-main {
-  background-color: $white;
-}
-
 .navbar {
   margin: 10px 0;
 }
 
 .navbar-brand {
   height: auto;
+}
+
+.page-header {
+  border-bottom: 0;
+}
+
+#logo {
+  a,
+  img {
+    display: block;
+    float: none;
+    position: relative;
+    width: 100%;
+  }
 }
 
 #spree-footer {
