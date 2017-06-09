@@ -1,5 +1,5 @@
 module Spree
-  class ArtworkCollection < ApplicationRecord
+  class ArtworkCollection < Spree::Base
     belongs_to :artwork, class_name: 'Spree::Artwork'
     belongs_to :collection, class_name: 'Spree::Collection'
 

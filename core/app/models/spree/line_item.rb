@@ -15,6 +15,9 @@ module Spree
 
     has_many :adjustments, as: :adjustable, dependent: :destroy
     has_many :inventory_units, inverse_of: :line_item
+    
+    has_many :artwork_line_items, dependent: :destroy, class_name: 'Spree::ArtworkLineItem'
+    has_many :artworks, through: :artwork_line_items, class_name: 'Spree::Artwork'
 
     before_validation :copy_price
     before_validation :copy_tax_category
