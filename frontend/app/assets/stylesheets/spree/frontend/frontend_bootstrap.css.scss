@@ -17,7 +17,7 @@
 .nav > li > a,
 .nav .open a {
   font-size: 16px;
-  
+
   &:active,
   &:focus,
   &:hover {
@@ -28,7 +28,7 @@
 .page-header {
   margin: 0 0 3em 0;
   padding: 0;
-  
+
   .jumbotron {
     background-color: transparent;
     margin: 0;
@@ -51,7 +51,7 @@
 .header-color {
   background-color: $brand-primary;
   position: relative;
-  
+
   &::before {
     background-image: image-url('forest.jpeg');
     background-position: center center;
@@ -66,12 +66,12 @@
     top: 0;
     z-index: 0;
   }
-  
+
   & > * {
     position: relative;
     z-index: 200;
   }
-  
+
   a {
     color: $white;
   }
@@ -124,6 +124,19 @@ section {
 .alert-notice { @extend .alert-success; }
 .alert-error, .alert-registration_error { @extend .alert-danger; }
 .alert-alert { @extend .alert-info; }
+
+.fitted {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.maximized {
+  width: 99%;
+}
 
 .product-body {
   height: 256px;

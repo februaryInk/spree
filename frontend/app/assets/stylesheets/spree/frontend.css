@@ -1,5 +1,6 @@
 /*
 * This is a manifest file that includes stylesheets for spree_frontend
+ *= require select2
  *= require spree/frontend/fonts
  *= require spree/frontend/frontend_bootstrap
  *= require spree/frontend/tabs

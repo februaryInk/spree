@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'bootstrap-sass',  '>= 3.3.5.1', '< 3.4'
   s.add_dependency 'canonical-rails', '~> 0.1.0'
   s.add_dependency 'jquery-rails',    '~> 4.1'
+  s.add_dependency 'select2-rails',   '3.5.9.1' # 3.5.9.2 breaks several specs
 
   s.add_development_dependency 'capybara-accessible'
 end

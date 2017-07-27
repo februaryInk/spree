@@ -1,10 +1,12 @@
 //= require bootstrap-sprockets
 //= require jquery.payment
 //= require jquery.validate/jquery.validate.min
+//= require select2
 //= require spree
 //= require spree/frontend/cart
 //= require spree/frontend/checkout
 //= require spree/frontend/checkout/address
 //= require spree/frontend/checkout/payment
 //= require spree/frontend/product
+//= require spree/frontend/spree-select2
 //= require spree/frontend/tabs

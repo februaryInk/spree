@@ -7,6 +7,10 @@
         = select_tag "[option_value_ids][#{option_type.id}]", options_from_collection_for_select( option_type.option_values, :id, :presentation ), { :prompt => "Choose #{option_type.presentation}", :class => 'form-control form-control-lg variant-selector' }
   - else
     = hidden_field_tag :variant_id, @product.master.id
+  #image-fields
+    %p.form-group
+      = label_tag :artwork_ids, 'Artwork'
+      = select_tag :artwork_ids, options_from_collection_for_select(Spree::Artwork.all.order(:code), :id, :code), { class: 'full-width select2', multiple: true }
   #customization-fields
   - if @product.price_in(current_currency) && !@product.price.nil?
     %div{"data-hook" => "product_price"}
