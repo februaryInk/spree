@@ -24,20 +24,28 @@ Spree.ready ($) ->
       ($ '#main-image img').attr 'src', newImg
       ($ '#main-image').data 'selectedThumb', newImg
       ($ '#main-image').data 'selectedThumbId', thumb.attr('id')
-  
-  Spree.updateCustomizationFields = (html) ->
-    ($ '#customization-fields' ).html(html)
-  
-  Spree.updateVariant = (variantId) -> 
+
+  Spree.updateCustomizationFields = (names) ->
+    console.log names
+    fields = ($ '#customization-fields').find('input')
+    ($ fields).each ->
+      name = /\[customizations\]\[([^\]]+)\]/.exec(($ this).attr('name'))[1]
+      console.log name
+      if name in names
+        ($ this).prop('disabled', false)
+      else
+        ($ this).prop('disabled', true)
+
+  Spree.updateVariant = (variantId) ->
     ($ '#selected-variant').val(variantId)
-  
+
   Spree.updateVariantPrice = (variantPrice) ->
     ($ '.price.selling').text(variantPrice) if variantPrice
 
   Spree.disableCartForm = (variant) ->
     inStock = variant.data('in-stock')
     $('#add-to-cart-button').attr('disabled', !inStock)
-    
+
   Spree.selectVariant = (optionValueIds, productId) ->
     $.get
       data: variant:
@@ -55,21 +63,21 @@ Spree.ready ($) ->
         Spree.updateVariant response.variant.id
         Spree.showVariantImages response.variant.id
         Spree.updateVariantPrice response.variant.price
-        Spree.updateCustomizationFields response.partial
-  
+        Spree.updateCustomizationFields response.variant.customization_names
+
   variantSelectors = $ '.variant-selector'
   productId = ($ '#add-to-cart').data 'product-id'
-  
+
   if variantSelectors.length > 0
     variantSelectors.change (event) ->
       ids = []
       $.each variantSelectors, (index, value) ->
         ids.push $(value).val()
-      
+
       ids = ids.filter (v) -> v != ''
-      
+
       if ids.length == variantSelectors.length
         Spree.selectVariant ids, productId
-  
+
 
   Spree.addImageHandlers()

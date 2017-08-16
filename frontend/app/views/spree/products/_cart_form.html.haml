@@ -12,6 +12,16 @@
       = label_tag :artwork_ids, 'Artwork'
       = select_tag :artwork_ids, options_from_collection_for_select(Spree::Artwork.all.order(:code), :id, :code), { class: 'full-width select2', multiple: true }
   #customization-fields
+    - @product.master.customization_variants.order(:position).each do |customization_variant|
+      - customization = customization_variant.customization
+      %p.form-group
+        = label_tag customization.presentation
+        - if customization.value_type == 'string'
+          = text_field_tag "[customizations][#{customization.name}]", nil, class: 'form-control form-control-lg', :disabled => true
+        - elsif customization.value_type == 'select'
+          = select_tag "[customizations][#{customization.name}]", options_from_collection_for_select( customization.customization_values, :name, :presentation ), { prompt: "Choose #{customization.presentation}", class: 'form-control form-control-lg', :disabled => true }
+        - else
+          = text_area_tag "[customizations][#{customization.name}]", nil, class: 'form-control form-control-lg', :disabled => true
   - if @product.price_in(current_currency) && !@product.price.nil?
     %div{"data-hook" => "product_price"}
       #product-price
@@ -21,12 +31,12 @@
             $--.--
           %span{:content => "#{@product.currency}", :itemprop => "priceCurrency"}
         - if @product.master.can_supply?
-          %link{:href => "https://schema.org/InStock", :itemprop => "availability"}/
+          %link{:href => "https://schema.org/InStock", :itemprop => "availability"}
         - elsif @product.variants.empty?
-          %br/
+          %br
           %span.out-of-stock= Spree.t(:out_of_stock)
       .add-to-cart
-        %br/
+        %br
         .input-group
           = number_field_tag :quantity, 1, class: 'title form-control', min: 1
           %span.input-group-btn
