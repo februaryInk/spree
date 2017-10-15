@@ -26,11 +26,9 @@ Spree.ready ($) ->
       ($ '#main-image').data 'selectedThumbId', thumb.attr('id')
 
   Spree.updateCustomizationFields = (names) ->
-    console.log names
-    fields = ($ '#customization-fields').find('input')
+    fields = ($ '#customization-fields').find('input, select, textarea')
     ($ fields).each ->
       name = /\[customizations\]\[([^\]]+)\]/.exec(($ this).attr('name'))[1]
-      console.log name
       if name in names
         ($ this).prop('disabled', false)
       else
