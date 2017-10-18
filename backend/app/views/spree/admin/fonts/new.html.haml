@@ -1,0 +1,9 @@
+= render partial: 'spree/admin/shared/error_messages', locals: { target: @font }
+- content_for :page_title do
+  = link_to Spree.t(:fonts), spree.admin_fonts_url
+  \/
+  = Spree.t(:new_font)
+= form_for [:admin, @font] do |f|
+  %fieldset{"data-hook" => 'new_font'}
+    = render partial: 'form', locals: { f: f }
+    = render partial: 'spree/admin/shared/new_resource_links'

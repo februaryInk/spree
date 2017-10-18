@@ -7,6 +7,9 @@
 - if can? :admin, Spree::Artwork
   %ul.nav.nav-sidebar
     = main_menu_tree 'Artwork', icon: 'picture', sub_menu: 'artwork', url: '#sidebar-artwork'
+- if can? :admin, Spree::Font
+  %ul.nav.nav-sidebar
+    = tab :fonts, icon: 'font', match_path: '/fonts'
 - if can? :admin, Spree::Product
   %ul.nav.nav-sidebar
     = main_menu_tree Spree.t(:products), icon: "th-large", sub_menu: "product", url: "#sidebar-product"

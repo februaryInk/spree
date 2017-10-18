@@ -1,0 +1,24 @@
+- content_for :page_title do
+  = plural_resource_name(Spree::Font)
+- content_for :page_actions do
+  = button_link_to Spree.t(:new_font), new_object_url, { class: 'btn-success', icon: 'add', 'data-update' => 'new_font', id: 'new_font_link' }
+- if @fonts.any?
+  %table#listing_fonts.table{ 'data-hook' => '' }
+    %thead
+      %tr{'data-hook' => 'fonts_header'}
+        %th= Spree.t(:name)
+        %th= Spree.t(:presentation)
+        %th
+        %th.actions
+    %tbody
+      - @fonts.each do |font|
+        %tr{ 'data-hook' => 'fonts_row', :id => spree_dom_id(font) }
+          %td= link_to font.name, spree.admin_font_path(font)
+          %td= font.presentation
+          %td.image= image_tag font.image.attachment.url(:mini)
+          %td.actions.actions-2.text-right
+            = link_to_edit(font, no_text: true, class: 'admin_edit_font')
+            = link_to_delete(font, no_text: true)
+- else
+  .alert.alert-info.no-objects-found
+    = "#{Spree.t(:no_resource_found, resource: plural_resource_name(Spree::Font))}, #{link_to Spree.t(:add_one), new_object_url}!".html_safe

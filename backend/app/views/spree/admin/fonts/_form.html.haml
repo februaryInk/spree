@@ -1,0 +1,18 @@
+%div
+  = f.field_container :name, class: ['form-group'] do
+    = f.label :name, Spree.t(:name)
+    %span.required *
+    %br
+    = f.text_field :name, class: 'form-control'
+    = f.error_message_on :name
+  = f.field_container :presentation, class: ['form-group'] do
+    = f.label :presentation
+    %span.required *
+    %br
+    = f.text_field :presentation, class: 'form-control'
+    = f.error_message_on :presentation
+  #image
+    = f.fields_for :image, f.object.image || f.object.build_image do |ff|
+      .form-group{"data-hook" => "file"}
+        = ff.label :attachment, Spree.t(:filename)
+        = ff.file_field :attachment

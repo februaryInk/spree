@@ -1,0 +1,6 @@
+- content_for :page_title do
+  = link_to Spree.t(:fonts), spree.admin_fonts_url
+  \/
+  = @font.name
+= image_tag @font.image.attachment.url(:large)
+= simple_format @font.presentation

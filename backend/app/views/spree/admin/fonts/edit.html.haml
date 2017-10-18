@@ -1,0 +1,9 @@
+- content_for :page_title do
+  = link_to Spree.t(:fonts), spree.admin_fonts_url
+  \/
+  = @font.name
+= render partial: 'spree/admin/shared/error_messages', locals: { target: @font }
+= form_for [:admin, @font] do |f|
+  %fieldset
+    = render partial: 'form', locals: { f: f }
+    = render partial: 'spree/admin/shared/edit_resource_links'
