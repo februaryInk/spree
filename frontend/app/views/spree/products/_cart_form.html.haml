@@ -4,7 +4,7 @@
     - @product.option_types.each do |option_type|
       %p.form-group
         = label_tag option_type.presentation
-        = select_tag "[option_value_ids][#{option_type.id}]", options_from_collection_for_select( option_type.option_values, :id, :presentation ), { :prompt => "Choose #{option_type.presentation}", :class => 'form-control form-control-lg variant-selector' }
+        = select_tag "[option_value_ids][#{option_type.id}]", options_from_collection_for_select( @product.variants.collect { |v| v.option_values.where(option_type_id: option_type.id).to_a }.flatten.uniq, :id, :presentation ), { :prompt => "Choose #{option_type.presentation}", :class => 'form-control form-control-lg variant-selector' }
   - else
     = hidden_field_tag :variant_id, @product.master.id
   #image-fields
