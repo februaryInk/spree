@@ -43,7 +43,7 @@ module Spree
       order          = current_order(create_order_if_necessary: true)
       variant        = Spree::Variant.find_by(id: params[:variant_id])
       customizations = params.require(:customizations).permit!.to_h || {}
-      artworks       = params[:artwork_ids].map { |id| Spree::Artwork.find(id) } || []
+      artworks       = params[:artwork_ids] ? params[:artwork_ids].map { |id| Spree::Artwork.find(id) } : []
       quantity       = params[:quantity].to_i
       options        = params[:options] || {}
 
