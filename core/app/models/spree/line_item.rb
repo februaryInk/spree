@@ -1,23 +1,26 @@
 module Spree
   class LineItem < Spree::Base
     serialize :customizations, Hash
-    
+
     before_validation :ensure_valid_quantity
 
     with_options inverse_of: :line_items do
       belongs_to :order, class_name: "Spree::Order", touch: true
       belongs_to :variant, class_name: "Spree::Variant"
     end
-    
+
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
 
     has_one :product, through: :variant
 
     has_many :adjustments, as: :adjustable, dependent: :destroy
     has_many :inventory_units, inverse_of: :line_item
-    
+
     has_many :artwork_line_items, dependent: :destroy, class_name: 'Spree::ArtworkLineItem'
     has_many :artworks, through: :artwork_line_items, class_name: 'Spree::Artwork'
+
+    has_many :font_line_items, dependent: :destroy, class_name: 'Spree::FontLineItem'
+    has_many :fonts, through: :font_line_items, class_name: 'Spree::Font'
 
     before_validation :copy_price
     before_validation :copy_tax_category

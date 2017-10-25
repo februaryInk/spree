@@ -3,6 +3,9 @@ module Spree
     validates :name, presence: true
     validates :presentation, presence: true
 
+    has_many :font_line_items, dependent: :destroy, class_name: 'Spree::FontLineItem'
+    has_many :line_items, through: :font_line_items, class_name: 'Spree::LineItem'
+
     has_one :image, as: :viewable, dependent: :destroy, class_name: 'Spree::Image'
 
     accepts_nested_attributes_for :image
