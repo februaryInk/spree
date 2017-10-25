@@ -1,0 +1,9 @@
+- content_for :page_title do
+  = link_to Spree.t(:customizations), spree.admin_customizations_url
+  \/
+  = @customization.name
+= render partial: 'spree/admin/shared/error_messages', locals: { target: @customization }
+= form_for [:admin, @customization] do |f|
+  %fieldset
+    = render partial: 'form', locals: { f: f }
+    = render partial: 'spree/admin/shared/edit_resource_links'

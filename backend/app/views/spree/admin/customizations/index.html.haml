@@ -1,0 +1,26 @@
+- content_for :page_title do
+  = plural_resource_name(Spree::Customization)
+- content_for :page_actions do
+  = button_link_to Spree.t(:new_customization), new_object_url, { class: 'btn-success', icon: 'add', 'data-update' => 'new_customization', id: 'new_customization_link' }
+%p
+  Customizations are used when a product has options that can be personalized that do not affect major aspects of the product, such as price or weight. They are similar to Option Values, except customizations are not used to create variants.
+- if @customizations.any?
+  %table#listing_customizations.table{ 'data-hook' => '' }
+    %thead
+      %tr{'data-hook' => 'customizations_header'}
+        %th= Spree.t(:name)
+        %th= Spree.t(:presentation)
+        %th= Spree.t(:value_type)
+        %th.actions
+    %tbody
+      - @customizations.each do |customization|
+        %tr{ 'data-hook' => 'customizations_row', :id => spree_dom_id(customization) }
+          %td= customization.name
+          %td= customization.presentation
+          %td= customization.value_type
+          %td.actions.actions-2.text-right
+            = link_to_edit(customization, no_text: true, class: 'admin_edit_customization')
+            = link_to_delete(customization, no_text: true)
+- else
+  .alert.alert-info.no-objects-found
+    = "#{Spree.t(:no_resource_found, resource: plural_resource_name(Spree::Customization))}, #{link_to Spree.t(:add_one), new_object_url}!".html_safe
