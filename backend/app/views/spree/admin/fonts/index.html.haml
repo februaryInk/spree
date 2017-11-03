@@ -15,7 +15,7 @@
         %tr{ 'data-hook' => 'fonts_row', :id => spree_dom_id(font) }
           %td= link_to font.name, spree.admin_font_path(font)
           %td= font.presentation
-          %td.image= image_tag font.image.attachment.url(:mini)
+          %td.image= image_tag font.preview_image.attachment.url(:mini) if font.preview_image.present?
           %td.actions.actions-2.text-right
             = link_to_edit(font, no_text: true, class: 'admin_edit_font')
             = link_to_delete(font, no_text: true)
