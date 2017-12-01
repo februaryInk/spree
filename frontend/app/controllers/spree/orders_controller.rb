@@ -44,6 +44,7 @@ module Spree
       variant        = Spree::Variant.find_by(id: params[:variant_id])
       customizations = params.require(:customizations).permit!.to_h || {}
       artworks       = params[:artwork_ids] ? params[:artwork_ids].map { |id| Spree::Artwork.find(id) } : []
+      fonts          = params[:font_id] ? [Spree::Font.find(params[:font_id])] : []
       quantity       = params[:quantity].to_i
       options        = params[:options] || {}
 
@@ -54,6 +55,7 @@ module Spree
             line_item = order.contents.add(variant, quantity, options)
             line_item.update_attributes(customizations: customizations)
             line_item.artworks << artworks
+            line_item.fonts << fonts
           rescue ActiveRecord::RecordInvalid => e
             error = e.record.errors.full_messages.join(", ")
           end

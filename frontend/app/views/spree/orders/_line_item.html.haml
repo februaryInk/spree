@@ -18,11 +18,17 @@
         = line_item_description_text(line_item.description)
       %ul
         - line_item.customizations.each do |customization, value|
-          %li
-            - if value.present?
-              = "#{Spree::Customization.find_by(name: customization).presentation}: #{value}"
-            - else
-              = "#{Spree::Customization.find_by(name: customization).presentation}: None"
+          - if Spree::Customization.find_by(name: customization).present?
+            %li
+              - if value.present?
+                = "#{Spree::Customization.find_by(name: customization).presentation}: #{value}"
+              - else
+                = "#{Spree::Customization.find_by(name: customization).presentation}: None"
+      %div
+        %p
+          Font
+        - line_item.fonts.each do |font|
+          = image_tag(font.image.attachment.url(:font))
       %div
         %p
           Artwork

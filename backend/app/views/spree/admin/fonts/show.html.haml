@@ -2,6 +2,6 @@
   = link_to Spree.t(:fonts), spree.admin_fonts_url
   \/
   = @font.name
-= image_tag @font.preview_image.attachment.url(:large) if @font.preview_image.present?
-= image_tag @font.image.attachment.url(:large) if @font.image.present?
+= image_tag @font.preview_image.attachment.url(:font) if @font.preview_image.present?
+= image_tag @font.image.attachment.url(:large_font) if @font.image.present?
 = simple_format @font.presentation
